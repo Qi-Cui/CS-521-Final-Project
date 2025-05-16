@@ -46,20 +46,6 @@ COPY env /tmp/docker_env
 RUN /opt/conda/bin/conda run -n ithemal /opt/conda/bin/conda install --file /tmp/docker_env -y || true
 RUN /opt/conda/bin/conda run -n ithemal pip install torch==1.1.0 torchvision==0.3.0
 
-RUN /opt/conda/bin/conda run -n ithemal pip install \
-    tqdm==4.64.0 \
-    mysql-connector==2.2.9 \
-    matplotlib==2.2.5 \
-    pandas==0.24.2 \
-    psutil==5.7.3 \
-    statistics
-
-USER ithemal
-WORKDIR /home/ithemal
-RUN git clone https://github.com/ithemal/bhive.git
-
-COPY scripts/convert_bhive_to_ithemal.py /home/ithemal/
-
 RUN curl -sL https://github.com/DynamoRIO/dynamorio/releases/download/release_7_0_0_rc1/DynamoRIO-Linux-7.0.0-RC1.tar.gz | tar xz -C /opt
 ENV DYNAMORIO_HOME "/opt/DynamoRIO-Linux-7.0.0-RC1"
 # tar will not give you `755 & ~umask` because tar is evil
@@ -71,6 +57,14 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && loca
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+
+RUN /opt/conda/bin/conda run -n ithemal pip install \
+    tqdm==4.64.0 \
+    mysql-connector==2.2.9 \
+    matplotlib==2.2.5 \
+    pandas==0.24.2 \
+    psutil==5.7.3 \
+    statistics
 
 ARG HOST_UID=1000
 ENV HOST_UID $HOST_UID

@@ -3,10 +3,10 @@ import uuid
 import subprocess
 import torch
 
-bhive_csv = "/home/ithemal/bhive-data/bhive/benchmark/throughput/hsw.csv"
+bhive_csv = "/home/ithemal/bhive/benchmark/throughput/hsw.csv"
 tokenizer_path = "/home/ithemal/ithemal/data_collection/build/bin/tokenizer"
 output_data_path = "/home/ithemal/haswell_bhive.ithemal.data"
-max_samples = 1000
+max_samples = 10000
 count = 0
 
 results = []
